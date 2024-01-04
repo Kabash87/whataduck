@@ -17,7 +17,7 @@ var app = express();
 
 //configuracion de cors
 const corsOptions = {
-  origin: `${process.env.FRONTEND_URL}`,
+  origin: ["https://whataduck.vercel.app/"],
   credentials: true,
 };
 
