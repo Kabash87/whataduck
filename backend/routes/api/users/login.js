@@ -21,21 +21,19 @@ router.post("/", async (req, res) => {
         const emailUser = findUser.email;
         const isVerified = findUser.isVerified;
         const emailToken = findUser.emailToken;
-        
+
         res.cookie("access-token", token);
         res.cookie("user-name", nameUser);
         res.cookie("email-user", emailUser);
         // Responder al cliente con un mensaje de éxito
         //Las comillas son necesarias para verificar la cuenta con JSON
-        res
-          .status(201)
-          .json({
-            mensaje: "Log In creado con éxito",
-            token: token,
-            userId: "\""+findUser.id+"\"",
-            veri: isVerified,
-            emailToken: "\""+emailToken+"\"",
-          });
+        res.status(201).json({
+          mensaje: "Log In creado con éxito",
+          token: token,
+          userId: findUser.id,
+          veri: isVerified,
+          emailToken: '"' + emailToken + '"',
+        });
       } else {
         res.status(401).json({ mensaje: "Contraseña inválida" });
       }

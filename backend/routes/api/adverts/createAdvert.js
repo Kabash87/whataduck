@@ -3,7 +3,7 @@ const router = express.Router();
 const Advert = require("../../../models/Advert");
 const upload = require("../../../config/multerConfig");
 const { loginrequired } = require("../../../config/JWT");
-
+const cloudinary = require("../../../utils/cloudinary");
 // Ruta para crear un nuevo anuncio
 
 // POST api/adverts/create-advert
@@ -16,7 +16,8 @@ router.post(
       // Obtener los datos del anuncio desde el cuerpo de la solicitud
       const { name, price, description, type, tags, username, senderEmail } =
         req.body;
-      // Comprobar si se ha cargado una foto
+
+      /* Comprobar si se ha cargado una foto*/
       let photoFilename;
       if (req.file) {
         photoFilename = req.file.filename;
@@ -24,6 +25,19 @@ router.post(
         photoFilename = "";
       }
 
+      /*Configuracion del Cloudinary*/
+      const result = await cloudinary.uploader.upload(
+        "public/uploads/" + photoFilename,
+        {
+          folder: "uploads",
+        }
+      );
+      /*
+      image: {
+          public_id: result.public_id,
+          url: result.secure_url,
+        },
+*/
       // Crear un objeto con los datos del anuncio
       const newAdvert = new Advert({
         name,
@@ -35,6 +49,10 @@ router.post(
         owner: res.newUser,
         username,
         senderEmail,
+        image: {
+          public_id: result.public_id,
+          url: result.secure_url,
+        },
       });
       // Guardar el anuncio en la base de datos
       const savedAdvert = await newAdvert.save();

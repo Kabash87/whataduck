@@ -46,7 +46,7 @@ router.post("/", async (req, res, next) => {
         subject: " What a Duck! 🦆 Verifica tu correo electronico✅",
         html: `<h2>¡Gracias por registrarte en What a Duck! Bienvenido,  ${newUser.name}</h2>
                 <h4> Porfavor, verifique su correo electronico para continuar...</h4>
-                <a href="${process.env.FRONTEND_URL}/verify-email?token=${newUser.emailToken}">Verificar Correo</a>`,
+                <a href="${process.env.FRONTEND_URL}verify-email?token=${newUser.emailToken}">Verificar Correo</a>`,
       };
 
       //Se envia el correo de verificacion

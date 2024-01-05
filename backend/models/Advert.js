@@ -8,6 +8,16 @@ const advertSchema = new mongoose.Schema({
   type: { type: String, enum: ["compra", "venta"], required: true },
   tags: { type: [String], required: true },
   photo: { type: String },
+  image: {
+    public_id: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
@@ -17,6 +27,18 @@ const advertSchema = new mongoose.Schema({
   senderEmail: { type: String },
 });
 
+/**
+ *  image: {
+    public_id: {
+      type: String,
+      required: true,
+    },
+    url: {
+      type: String,
+      required: true,
+    },
+  },
+ */
 // Crear el modelo 'Anuncio' a partir del esquema
 const Advert = mongoose.model("adverts", advertSchema);
 
