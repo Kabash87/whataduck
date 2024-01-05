@@ -21,6 +21,7 @@ router.post("/", async (req, res) => {
         const emailUser = findUser.email;
         const isVerified = findUser.isVerified;
         const emailToken = findUser.emailToken;
+        const userName = findUser.name;
 
         res.cookie("access-token", token);
         res.cookie("user-name", nameUser);
@@ -33,6 +34,8 @@ router.post("/", async (req, res) => {
           userId: findUser.id,
           veri: isVerified,
           emailToken: '"' + emailToken + '"',
+          userName: userName,
+          emailUser: emailUser,
         });
       } else {
         res.status(401).json({ mensaje: "Contraseña inválida" });
